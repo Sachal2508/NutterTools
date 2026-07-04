@@ -1,0 +1,6 @@
+# robots.txt for NutterTools
+User-agent: *
+Allow: /
+
+# Sitemap link (Replace with custom domain if changed later)
+Sitemap: https://nuttertools.vercel.app/sitemap.xml

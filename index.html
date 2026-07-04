@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutterTools — Cheat Code for Your Files</title>
+    <meta name="description" content="NutterTools: 24 powerful, 100% client-side file tools for PDF, images, and utilities. Your files never leave your device." />
+    <!-- Fonts: Syne (display/logo), Plus Jakarta Sans (body), DM Mono (labels) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Caveat:wght@400;700&family=Pacifico&family=Great+Vibes&family=Sacramento&display=swap" rel="stylesheet">
+    <!-- Inline theme script to prevent FOUC -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('nt-theme');
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body class="antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

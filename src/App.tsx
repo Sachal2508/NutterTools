@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import BenchRail from './components/layout/BenchRail';
+import ScrollToTop from './components/layout/ScrollToTop';
 import { ToastProvider } from './components/ui/Toast';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -31,6 +32,7 @@ function App() {
           </div>
 
           <Footer />
+          <ScrollToTop />
         </div>
       </ToastProvider>
     </BrowserRouter>

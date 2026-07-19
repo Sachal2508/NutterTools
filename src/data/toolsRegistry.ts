@@ -1,7 +1,11 @@
 import { 
   Merge, Scissors, Minimize2, FileText, FileCode, Image, FileImage, 
   RotateCw, Unlock, Lock, FolderArchive, Hash, Sliders, Maximize, 
-  RefreshCw, Crop, Contact, Palette, PenTool, QrCode, Type, Key, Binary 
+  RefreshCw, Crop, Contact, Palette, PenTool, QrCode, Type, Key, Binary,
+  Trash2, Download, Grid, Camera, Wrench, Search, FileSpreadsheet,
+  Presentation, Globe, FileArchive, Droplet, FileEdit, FileSignature,
+  EyeOff, Columns, Sparkles, FileCode2,
+  Laugh, CameraOff, Pipette, Braces, GitCompare, ScanBarcode, Mic, Calendar, Fingerprint, Settings
 } from 'lucide-react';
 import React from 'react';
 
@@ -22,7 +26,7 @@ export interface Tool {
 }
 
 export const toolsRegistry: Tool[] = [
-  // PDF / (12)
+  // PDF / (12 + 18 new = 30)
   {
     id: 'merge-pdf',
     name: 'Merge PDF',
@@ -83,12 +87,12 @@ export const toolsRegistry: Tool[] = [
     icon: FileText,
     instructions: [
       'Upload a PDF document that contains selectable text.',
-      'Click "Convert to Word" to parse and translate structural layouts.',
-      'Download the editable .docx file to your computer.'
+      'Choose your conversion mode: "High-Fidelity" (preserves all formatting/watermarks as full-page images) or "Editable Text Only" (extracts plain text only).',
+      'Click "Convert to Word" and download the generated .docx file.'
     ],
     faqs: [
-      { q: 'Does this tool support scanned PDFs (OCR)?', a: 'No. This tool runs 100% in your browser and extracts selectable text. Scanned PDFs containing only images will convert to empty pages or images. Offline OCR is not supported.' },
-      { q: 'Will the styling and layout remain exactly identical?', a: 'Complex multi-column layouts, custom fonts, or floating graphics may require adjustments in Word after conversion.' }
+      { q: 'What is High-Fidelity mode?', a: 'High-Fidelity mode renders the PDF pages to high-resolution images and packages them into the Word document, preserving all margins, watermarks, and graphics exactly.' },
+      { q: 'Does this tool support scanned PDFs (OCR)?', a: 'Editable Text mode will not extract text from scans. For scans, we recommend using our specialized OCR PDF tool.' }
     ]
   },
   {
@@ -100,12 +104,12 @@ export const toolsRegistry: Tool[] = [
     icon: FileCode,
     instructions: [
       'Upload a standard Word document (.docx format only).',
-      'Preview the parsed outline structure in the browser.',
-      'Click "Convert to PDF" to render and trigger your download.'
+      'Click "Convert to PDF" to render the pages locally inside your browser.',
+      'Once complete, download the pixel-accurate PDF file.'
     ],
     faqs: [
       { q: 'Does this support older .doc formats?', a: 'No, it only supports modern XML-based Word files ending in .docx.' },
-      { q: 'Are custom fonts supported?', a: 'Yes, it attempts to map standard system fonts. Standard layout conversion keeps styles intact.' }
+      { q: 'Will my layouts and images be preserved?', a: 'Yes. By utilizing docx-preview, we render all images, tables, lists, shapes, and alignments with 100% layout fidelity.' }
     ]
   },
   {
@@ -242,8 +246,312 @@ export const toolsRegistry: Tool[] = [
       { q: 'Will I lose links or annotations?', a: 'Because the pages are flattened and re-rendered to achieve target dimensions and compression quality, interactive links and form inputs on original pages will be rasterized.' }
     ]
   },
-
-  // IMAGE / (7)
+  // NEW PDF UTILITIES (17 Tools)
+  {
+    id: 'remove-pages',
+    name: 'Remove Pages',
+    description: 'Select and delete specific pages from a PDF document.',
+    category: 'pdf',
+    route: '/remove-pages',
+    icon: Trash2,
+    instructions: [
+      'Upload your PDF document to the workspace.',
+      'Select the page thumbnails you wish to delete from the document.',
+      'Click "Remove Pages" to generate and download the cleaned PDF file.'
+    ],
+    faqs: [
+      { q: 'Can I undo page deletions?', a: 'Yes, you can click on deleted page thumbnails to restore them before exporting the final PDF.' }
+    ]
+  },
+  {
+    id: 'extract-pages',
+    name: 'Extract Pages',
+    description: 'Isolate specific pages or ranges from your PDF into a new document.',
+    category: 'pdf',
+    route: '/extract-pages',
+    icon: Download,
+    instructions: [
+      'Upload your PDF file to the workbench.',
+      'Enter specific page numbers/ranges, or click thumbnails to select pages to extract.',
+      'Click "Extract Pages" to compile and save your selection.'
+    ],
+    faqs: [
+      { q: 'Can I extract non-contiguous page ranges?', a: 'Yes. You can extract pages like "1, 3, 5-8" into a single consolidated PDF.' }
+    ]
+  },
+  {
+    id: 'organize-pdf',
+    name: 'Organize PDF',
+    description: 'Reorder, rotate, or remove pages from a PDF in an interactive workspace.',
+    category: 'pdf',
+    route: '/organize-pdf',
+    icon: Grid,
+    instructions: [
+      'Upload the PDF file you wish to organize.',
+      'Drag and drop the page thumbnails to change their sequential order.',
+      'Use the rotate and delete controls on individual pages, then click "Save Organization".'
+    ],
+    faqs: [
+      { q: 'Is my data secure while organizing?', a: 'Yes, page reordering is completed entirely in browser memory. No files are uploaded to any server.' }
+    ]
+  },
+  {
+    id: 'scan-to-pdf',
+    name: 'Scan to PDF',
+    description: 'Scan pages using your device camera or upload image files, then export as PDF.',
+    category: 'pdf',
+    route: '/scan-to-pdf',
+    icon: Camera,
+    instructions: [
+      'Click "Use Camera" to capture pages using your webcam, or upload images directly.',
+      'Apply image enhancement filters (B&W scanner, grayscale, contrast boost).',
+      'Click "Build PDF" to generate your scanned document.'
+    ],
+    faqs: [
+      { q: 'Which filters are best for scanned documents?', a: 'The "B&W Document" filter threshold is optimized to clean up shadow gradients and make text highly legible.' }
+    ]
+  },
+  {
+    id: 'repair-pdf',
+    name: 'Repair PDF',
+    description: 'Re-index cross-reference tables and recover structure from corrupted PDFs.',
+    category: 'pdf',
+    route: '/repair-pdf',
+    icon: Wrench,
+    instructions: [
+      'Upload a damaged, corrupted, or unreadable PDF document.',
+      'The tool will scan, repair XREF pointer offsets, and reconstruct the page catalog.',
+      'Download the recovered PDF document.'
+    ],
+    faqs: [
+      { q: 'Can it recover files with completely missing bytes?', a: 'It repairs structure, catalog pointers, and offsets. If a file is completely blank or missing internal resource streams, content recovery may be limited.' }
+    ]
+  },
+  {
+    id: 'ocr-pdf',
+    name: 'OCR PDF',
+    description: 'Extract text from scanned PDFs and images using browser-based OCR.',
+    category: 'pdf',
+    route: '/ocr-pdf',
+    icon: Search,
+    instructions: [
+      'Upload your scanned PDF document or page images.',
+      'Select the document language (defaults to English).',
+      'Wait for the OCR engine to extract the text, then download the TXT file.'
+    ],
+    faqs: [
+      { q: 'Is the OCR completed on a server?', a: 'No. OCR uses tesseract.js WebAssembly which runs locally inside your browser worker threads.' }
+    ]
+  },
+  {
+    id: 'excel-to-pdf',
+    name: 'Excel to PDF',
+    description: 'Convert Excel spreadsheets (.xlsx) into clean, readable PDF tables.',
+    category: 'pdf',
+    route: '/excel-to-pdf',
+    icon: FileSpreadsheet,
+    instructions: [
+      'Upload your Excel spreadsheet (.xlsx format).',
+      'Configure document page formatting (A4 orientation, gridlines toggle).',
+      'Click "Convert to PDF" to compile your spreadsheet into table sheets.'
+    ],
+    faqs: [
+      { q: 'Are formulas and hidden sheets supported?', a: 'Visible data sheets are parsed and rendered. Formatted values are printed, but formulas remain structural.' }
+    ]
+  },
+  {
+    id: 'pdf-to-excel',
+    name: 'PDF to Excel',
+    description: 'Extract tables and structured data from PDFs into editable Excel sheets.',
+    category: 'pdf',
+    route: '/pdf-to-excel',
+    icon: FileSpreadsheet,
+    instructions: [
+      'Upload a PDF document containing table structures.',
+      'Choose extraction settings (auto-align columns based on coordinate matrices).',
+      'Click "Convert to Excel" to download your editable .xlsx spreadsheet.'
+    ],
+    faqs: [
+      { q: 'Does this support scanned documents?', a: 'It requires selectable text PDFs to construct cell values. Scanned PDFs will yield empty sheets unless run through OCR first.' }
+    ]
+  },
+  {
+    id: 'pdf-to-pptx',
+    name: 'PDF to PowerPoint',
+    description: 'Convert PDF pages into editable PowerPoint slides (.pptx).',
+    category: 'pdf',
+    route: '/pdf-to-pptx',
+    icon: Presentation,
+    instructions: [
+      'Upload your PDF document to the slider workbench.',
+      'Click "Convert to PowerPoint" to process and pack slides.',
+      'Download the .pptx presentation file.'
+    ],
+    faqs: [
+      { q: 'How are pages mapped in PowerPoint?', a: 'Each page of the PDF is converted to a slide-size background image, ensuring 100% exact reproduction of formatting, fonts, and designs.' }
+    ]
+  },
+  {
+    id: 'html-to-pdf',
+    name: 'HTML to PDF',
+    description: 'Convert HTML code, webpages, or uploaded HTML files into clean PDFs.',
+    category: 'pdf',
+    route: '/html-to-pdf',
+    icon: Globe,
+    instructions: [
+      'Paste raw HTML code, upload an .html file, or paste a webpage URL.',
+      'Customize output margins, background rendering, and layout scaling.',
+      'Click "Convert to PDF" to generate and download.'
+    ],
+    faqs: [
+      { q: 'Can I render external stylesheets or web pages?', a: 'Yes, if you enter a public URL, we fetch and render elements client-side, respecting stylesheets and inline images.' }
+    ]
+  },
+  {
+    id: 'pdf-to-pdfa',
+    name: 'PDF to PDF/A',
+    description: 'Convert standard PDFs into ISO-standardized PDF/A for long-term archiving.',
+    category: 'pdf',
+    route: '/pdf-to-pdfa',
+    icon: FileArchive,
+    instructions: [
+      'Upload the PDF you wish to convert to PDF/A format.',
+      'The tool will embed standard color profiles, strip non-archival elements, and enforce conformance.',
+      'Download your PDF/A compliant document.'
+    ],
+    faqs: [
+      { q: 'What is PDF/A?', a: 'PDF/A is a standardized version of PDF specialized for archiving, disabling features like javascript, encryption, and external references to ensure long-term reproducibility.' }
+    ]
+  },
+  {
+    id: 'add-watermark',
+    name: 'Add Watermark',
+    description: 'Overlay custom text or image watermarks on all pages of a PDF.',
+    category: 'pdf',
+    route: '/add-watermark',
+    icon: Droplet,
+    instructions: [
+      'Upload the PDF file you wish to watermark.',
+      'Configure text watermark (text, font size, opacity, angle, color) or upload a watermark image.',
+      'Choose positioning (centered or tiled grid), and click "Apply Watermark".'
+    ],
+    faqs: [
+      { q: 'Can I adjust watermark transparency?', a: 'Yes. An opacity slider allows you to set visibility (e.g. 15% opacity is standard for subtle watermarks).' }
+    ]
+  },
+  {
+    id: 'crop-pdf',
+    name: 'Crop PDF',
+    description: 'Crop PDF page margins visually to adjust layout boundaries.',
+    category: 'pdf',
+    route: '/crop-pdf',
+    icon: Crop,
+    instructions: [
+      'Drop your PDF into the workbench resizer.',
+      'Adjust the crop boxes on the page view, or set custom margin values.',
+      'Click "Crop PDF" to crop all page bounding boxes and download.'
+    ],
+    faqs: [
+      { q: 'Does cropping reduce file size?', a: 'It adjusts the display dimensions (cropBox) of the PDF, hiding the margins. Content remains inside but is cropped out of view.' }
+    ]
+  },
+  {
+    id: 'pdf-forms',
+    name: 'Fill PDF Forms',
+    description: 'Fill out interactive PDF forms, select checkboxes, and flatten form values.',
+    category: 'pdf',
+    route: '/pdf-forms',
+    icon: FileEdit,
+    instructions: [
+      'Upload a PDF that contains interactive form fields.',
+      'Click on any highlighted form input field, checkbox, or dropdown list to edit.',
+      'Click "Flatten & Save" or "Save Interactive" to download the filled PDF.'
+    ],
+    faqs: [
+      { q: 'What does "Flatten & Save" mean?', a: 'Flattening merges the form field values directly into the page content, turning inputs into static text so they cannot be edited again.' }
+    ]
+  },
+  {
+    id: 'sign-pdf',
+    name: 'Sign PDF',
+    description: 'Draw, type, or upload a digital signature and place it on your PDF.',
+    category: 'pdf',
+    route: '/sign-pdf',
+    icon: FileSignature,
+    instructions: [
+      'Upload the PDF document you wish to sign.',
+      'Create a signature (draw on canvas, type with cursive fonts, or upload image).',
+      'Click on any page to stamp the signature, resize/reposition it, and click "Save Signed PDF".'
+    ],
+    faqs: [
+      { q: 'Can I add multiple signatures?', a: 'Yes. You can stamp the signature multiple times on different pages or add new signature models.' }
+    ]
+  },
+  {
+    id: 'redact-pdf',
+    name: 'Redact PDF',
+    description: 'Overlay black redaction bars to permanently hide sensitive information.',
+    category: 'pdf',
+    route: '/redact-pdf',
+    icon: EyeOff,
+    instructions: [
+      'Upload your PDF to the redact workbench.',
+      'Click and drag on the pages to draw black redaction bounding boxes over sensitive details.',
+      'Click "Apply Redaction" to burn the blocks into the document and download.'
+    ],
+    faqs: [
+      { q: 'Does this permanently delete the hidden content?', a: 'Yes. The redaction draws solid shapes into the PDF stream, obscuring the content permanently.' }
+    ]
+  },
+  {
+    id: 'compare-pdf',
+    name: 'Compare PDF',
+    description: 'Compare two PDF documents side-by-side to detect adjustments.',
+    category: 'pdf',
+    route: '/compare-pdf',
+    icon: Columns,
+    instructions: [
+      'Upload the original PDF (Left) and the modified PDF (Right).',
+      'Scroll pages side-by-side to review changes.',
+      'Differences in text or alignments will be visually highlighted.'
+    ],
+    faqs: [
+      { q: 'Can it compare scanned pages?', a: 'Yes, it displays pages side-by-side. Text structure comparison works best on selectable text documents.' }
+    ]
+  },
+  {
+    id: 'ai-summarizer',
+    name: 'AI Summarizer',
+    description: 'Summarize key information from PDF documents using Gemini AI.',
+    category: 'pdf',
+    route: '/ai-summarizer',
+    icon: Sparkles,
+    instructions: [
+      'Upload a text-based PDF document.',
+      'Provide your Gemini API Key (saved securely in your browser session).',
+      'Select a summary detail level (brief bullet points or detailed brief) and click "Summarize".'
+    ],
+    faqs: [
+      { q: 'Is my API key sent to a server?', a: 'No. API queries are made directly from your browser to Google\'s Gemini endpoints. Your API key never passes through our server.' }
+    ]
+  },
+  {
+    id: 'pdf-to-markdown',
+    name: 'PDF to Markdown',
+    description: 'Translate PDF text layout and structure into clean Markdown formatting (.md).',
+    category: 'pdf',
+    route: '/pdf-to-markdown',
+    icon: FileCode2,
+    instructions: [
+      'Upload your selectable text PDF document.',
+      'Click "Convert to Markdown" to parse paragraphs, headings, and lists.',
+      'Download your formatted .md text file.'
+    ],
+    faqs: [
+      { q: 'Will images be converted?', a: 'Markdown is a text-based format. PDF text styling (bold, italic) and layout structures are parsed, but image binaries are omitted.' }
+    ]
+  },
+  // IMAGE / (7))
   {
     id: 'compress-image',
     name: 'Image Compressor',
@@ -356,6 +664,103 @@ export const toolsRegistry: Tool[] = [
       { q: 'Is the downloaded background transparent?', a: 'Yes, it is exported as a transparent PNG, allowing you to drop it directly onto PDFs or contracts.' }
     ]
   },
+  {
+    id: 'meme-generator',
+    name: 'Meme Generator',
+    description: 'Create custom memes by uploading images and overlaying styled captions.',
+    category: 'image',
+    route: '/meme-generator',
+    icon: Laugh,
+    instructions: [
+      'Upload a base image or meme template.',
+      'Type your desired Top and Bottom caption text.',
+      'Adjust font styling, colors, and borders, then drag captions into position.',
+      'Click "Download Meme" to export your high-resolution creation.'
+    ],
+    faqs: [
+      { q: 'Can I add custom text colors?', a: 'Yes. You can customize fill colors, outlines, and font sizes dynamically in the sidebar panel.' }
+    ]
+  },
+  {
+    id: 'exif-stripper',
+    name: 'EXIF Metadata Stripper',
+    description: 'View and strip hidden EXIF metadata from photos to protect your privacy.',
+    category: 'image',
+    route: '/exif-stripper',
+    icon: CameraOff,
+    instructions: [
+      'Upload any photograph (JPEG/PNG).',
+      'Review parsed camera settings, capture date, and GPS coordinates.',
+      'Click "Clean Metadata" to generate and download a privacy-protected image.'
+    ],
+    faqs: [
+      { q: 'Is metadata stripping completed online?', a: 'No, all EXIF parsing and byte-stripping is handled client-side in browser memory.' }
+    ]
+  },
+  {
+    id: 'image-color-picker',
+    name: 'Image Color Picker',
+    description: 'Extract and copy precise Hex, RGB, and HSL colors from any uploaded image.',
+    category: 'image',
+    route: '/image-color-picker',
+    icon: Pipette,
+    instructions: [
+      'Upload your image to the workspace.',
+      'Hover over the image canvas to zoom in and preview color values.',
+      'Click any pixel to copy the Hex color code instantly to your clipboard.'
+    ],
+    faqs: [
+      { q: 'What color spaces are supported?', a: 'You can extract Hex codes, RGB tuples, and HSL formats.' }
+    ]
+  },
+  {
+    id: 'dpi-converter',
+    name: 'Image DPI Converter',
+    description: 'Change image DPI metadata without modifying visual pixel dimensions.',
+    category: 'image',
+    route: '/dpi-converter',
+    icon: Settings,
+    instructions: [
+      'Upload your image file.',
+      'Select a target print resolution (e.g. 72, 96, 150, 300 DPI).',
+      'Click "Convert DPI" to rewrite the header metadata and download.'
+    ],
+    faqs: [
+      { q: 'Why do I need to change DPI?', a: 'Many official portal uploads, passport applications, and printing labs require images to be set exactly at 300 DPI to guarantee resolution sizes.' }
+    ]
+  },
+  {
+    id: 'color-palette-extractor',
+    name: 'Palette Extractor',
+    description: 'Extract dominant color palettes and Hex codes from any uploaded image.',
+    category: 'image',
+    route: '/color-palette-extractor',
+    icon: Palette,
+    instructions: [
+      'Drop your image into the workspace container.',
+      'The tool will automatically sample pixel clusters to identify dominant colors.',
+      'Click on any color block to copy its Hex color code.'
+    ],
+    faqs: [
+      { q: 'How does the color palette extraction work?', a: 'We draw the image offscreen and group colors based on frequency and saturation thresholds client-side.' }
+    ]
+  },
+  {
+    id: 'image-base64',
+    name: 'Image to Base64',
+    description: 'Convert images to Base64 URI strings, or decode Base64 strings to downloadable images.',
+    category: 'image',
+    route: '/image-base64',
+    icon: Binary,
+    instructions: [
+      'Drag and drop an image to generate its Base64 code string instantly.',
+      'Or paste a Base64 image data URI string into the decoder block.',
+      'Copy the output string, or click "Download Image" to save decoded pictures.'
+    ],
+    faqs: [
+      { q: 'Are my codes secure?', a: 'Yes, all encoding and decoding operations happen locally in your browser.' }
+    ]
+  },
 
   // UTILITY / (4)
   {
@@ -421,5 +826,134 @@ export const toolsRegistry: Tool[] = [
     faqs: [
       { q: 'Does this handle custom punctuation?', a: 'Yes, sentence case and title case respect common punctuation marks and spacing rules.' }
     ]
+  },
+  {
+    id: 'json-formatter',
+    name: 'JSON Formatter',
+    description: 'Format, validate, and minify JSON text files with collapsible tree views.',
+    category: 'utility',
+    route: '/json-formatter',
+    icon: Braces,
+    instructions: [
+      'Paste your raw JSON content into the editor.',
+      'Click "Format JSON" to beautify the layout OR "Minify JSON" to compress spacing.',
+      'Review any inline syntax errors reported in the real-time status bar.'
+    ],
+    faqs: [
+      { q: 'What happens to invalid JSON?', a: 'Our client-side parser validates JSON and displays clear syntax highlights pointing to the exact character or line error.' }
+    ]
+  },
+  {
+    id: 'diff-checker',
+    name: 'Diff Checker',
+    description: 'Compare two text blocks side-by-side to highlight differences and matching lines.',
+    category: 'utility',
+    route: '/diff-checker',
+    icon: GitCompare,
+    instructions: [
+      'Input your original text block in the Left panel.',
+      'Input the modified text block in the Right panel.',
+      'Review highlighted additions (green) and deletions (red) in real-time.'
+    ],
+    faqs: [
+      { q: 'Is it word-level or character-level?', a: 'We run a local difference engine highlighting exact line differences and word changes.' }
+    ]
+  },
+  {
+    id: 'csv-json-converter',
+    name: 'CSV JSON Converter',
+    description: 'Convert CSV files to clean JSON format, or format JSON objects back to CSV columns.',
+    category: 'utility',
+    route: '/csv-json-converter',
+    icon: FileSpreadsheet,
+    instructions: [
+      'Upload a CSV spreadsheet OR paste JSON data arrays.',
+      'Select conversion mode: "CSV to JSON" or "JSON to CSV".',
+      'Review the parsed output, copy it, or download the converted file.'
+    ],
+    faqs: [
+      { q: 'Does it support custom delimiters?', a: 'Yes. It automatically parses standard comma-separated, tab-separated, and semicolon-separated formatting values.' }
+    ]
+  },
+  {
+    id: 'barcode-tool',
+    name: 'Barcode Tool',
+    description: 'Generate customizable barcodes or scan barcodes using your webcam.',
+    category: 'utility',
+    route: '/barcode-tool',
+    icon: ScanBarcode,
+    instructions: [
+      'Choose "Generate Barcode" and enter text values to create Code128, EAN, or UPC barcodes.',
+      'Or choose "Scan Barcode" and point your webcam camera at any barcode line.',
+      'Copy scanned values or download generated barcode images.'
+    ],
+    faqs: [
+      { q: 'Which barcode standards are supported?', a: 'We support Code 128, EAN-13, UPC-A, and basic Code 39 formats client-side.' }
+    ]
+  },
+  {
+    id: 'markdown-editor',
+    name: 'Markdown Editor',
+    description: 'Write markdown syntax with a live split-screen styled HTML render view.',
+    category: 'utility',
+    route: '/markdown-editor',
+    icon: FileCode,
+    instructions: [
+      'Write or paste Markdown syntax in the left panel.',
+      'Preview real-time styled text headers, links, lists, and tables on the right side.',
+      'Click "Export Markdown" or "Copy HTML" to save your results.'
+    ],
+    faqs: [
+      { q: 'Can I include tables and code blocks?', a: 'Yes, our local parser supports standard GitHub Flavored Markdown (GFM) elements.' }
+    ]
+  },
+  {
+    id: 'text-to-speech',
+    name: 'Speech & Text Helper',
+    description: 'Convert text-to-speech voice reader or dictate voice into text notes.',
+    category: 'utility',
+    route: '/text-to-speech',
+    icon: Mic,
+    instructions: [
+      'For Voice Reader: Paste text, choose a device voice, speed, and click Speak.',
+      'For Voice Dictation: Click "Start Dictation" and speak into your microphone.',
+      'Dictated text will build in the notepad, ready for you to copy.'
+    ],
+    faqs: [
+      { q: 'Are my voice files sent to a server?', a: 'No, Web Speech synthesis and recognition APIs run completely locally in your browser engine.' }
+    ]
+  },
+  {
+    id: 'age-calculator',
+    name: 'Age & Date Calculator',
+    description: 'Calculate ages, date differences, and upcoming birthday countdowns.',
+    category: 'utility',
+    route: '/age-calculator',
+    icon: Calendar,
+    instructions: [
+      'Select your birthdate to calculate exact age details.',
+      'Review age telemetry broken down in years, months, weeks, days, and seconds.',
+      'Use the Date Gap tab to measure durations between any two dates.'
+    ],
+    faqs: [
+      { q: 'Does it account for leap years?', a: 'Yes, date calculations respect exact calendar metrics, leap years, and month lengths.' }
+    ]
+  },
+  {
+    id: 'uuid-generator',
+    name: 'UUID Generator',
+    description: 'Generate bulk cryptographically secure UUIDv4 identifiers instantly.',
+    category: 'utility',
+    route: '/uuid-generator',
+    icon: Fingerprint,
+    instructions: [
+      'Enter the quantity of UUIDs to generate (up to 500).',
+      'Toggle uppercase formats or hyphen removals.',
+      'Click "Generate UUIDs" and copy the outputs to your clipboard.'
+    ],
+    faqs: [
+      { q: 'Is it secure?', a: 'Yes, we use the standard Web Crypto API to generate high-entropy random GUIDs.' }
+    ]
   }
 ];
+

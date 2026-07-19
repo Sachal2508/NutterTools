@@ -14,6 +14,7 @@
     "@pdfsmaller/pdf-encrypt-lite": "^1.0.2",
     "browser-image-compression": "^2.0.2",
     "docx": "^9.7.1",
+    "docx-preview": "^0.4.0",
     "heic2any": "^0.0.4",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
@@ -27,7 +28,9 @@
     "react-dom": "^19.2.7",
     "react-easy-crop": "^6.1.0",
     "react-router-dom": "^7.18.1",
-    "react-signature-canvas": "^1.1.0-alpha.2"
+    "react-signature-canvas": "^1.1.0-alpha.2",
+    "tesseract.js": "^7.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/node": "^24.13.2",

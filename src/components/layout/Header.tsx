@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { Search, X, Menu, Zap } from 'lucide-react';
+import { Search, X, Menu, Zap, Mail } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 /* ── NutterTools Inline SVG Logomark ── */
@@ -126,6 +126,14 @@ export const Header: React.FC = () => {
               Privacy
             </Link>
 
+            <Link
+              to="/contact"
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-border/40 font-sans text-sm font-medium transition-colors"
+            >
+              <Mail size={13} className="text-accent" />
+              Contact
+            </Link>
+
             <ThemeToggle />
 
             {/* Mobile menu button */}
@@ -169,13 +177,21 @@ export const Header: React.FC = () => {
         {/* ── Mobile Menu ── */}
         {menuOpen && (
           <nav className="sm:hidden pb-4 border-t border-border mt-0 pt-3 flex flex-col gap-1 animate-fade-in">
-            <Link
+          <Link
               to="/about"
               onClick={() => setMenuOpen(false)}
               className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-ink font-medium hover:bg-border/40 transition-colors text-sm"
             >
               <Zap size={14} className="text-accent" />
-              About & Privacy
+              About &amp; Privacy
+            </Link>
+            <Link
+              to="/contact"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-ink font-medium hover:bg-border/40 transition-colors text-sm"
+            >
+              <Mail size={14} className="text-accent" />
+              Contact
             </Link>
           </nav>
         )}

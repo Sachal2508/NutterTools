@@ -5,7 +5,18 @@
 /**
  * Triggers a local browser download for a Blob using an anchor element.
  */
+/** Increment the global "files processed" counter stored in localStorage */
+export const bumpFilesProcessed = (): void => {
+  try {
+    const prev = parseInt(localStorage.getItem('nt-files-processed') || '0', 10);
+    localStorage.setItem('nt-files-processed', String(prev + 1));
+    // Dispatch a storage event so any open tabs can react
+    window.dispatchEvent(new Event('nt-stats-update'));
+  } catch (_) { /* ignore private-browsing restrictions */ }
+};
+
 export const downloadBlob = (blob: Blob, filename: string): void => {
+  bumpFilesProcessed();
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;

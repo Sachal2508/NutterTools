@@ -9,24 +9,24 @@
 
 :root {
   /* Backgrounds */
-  --bg: #FFFCF5;
+  --bg: #FAF8F3;
   --surface: #FFFFFF;
-  --surface-raised: #FFF8ED;
+  --surface-raised: #FFF5E6;
 
   /* Text */
   --ink: #0F0E0D;
-  --ink-muted: #71695E;
+  --ink-muted: #6B6258;
 
   /* Brand */
   --accent: #FF5C00;
   --accent-hover: #E54E00;
-  --accent-glow: rgba(255, 92, 0, 0.14);
+  --accent-glow: rgba(255, 92, 0, 0.18);
   --accent-2: #7C3AED;
-  --accent-2-glow: rgba(124, 58, 237, 0.12);
+  --accent-2-glow: rgba(124, 58, 237, 0.14);
 
   /* UI */
-  --border: #EAE4D9;
-  --border-strong: #D4CCBC;
+  --border: #E4DDD0;
+  --border-strong: #C9BFB0;
   --danger: #DC2626;
   --success: #16A34A;
 
@@ -122,8 +122,20 @@ html[data-theme='dark'] {
 
   /* Orange-glowing card hover */
   .card-hover-orange:hover {
-    box-shadow: 0 12px 32px rgba(255, 92, 0, 0.18), 0 2px 8px rgba(255, 92, 0, 0.10);
-    border-color: rgba(255, 92, 0, 0.5);
+    box-shadow: 0 12px 32px rgba(255, 92, 0, 0.22), 0 2px 8px rgba(255, 92, 0, 0.12);
+    border-color: rgba(255, 92, 0, 0.55);
+  }
+
+  /* Violet-glowing card hover */
+  .card-hover-violet:hover {
+    box-shadow: 0 12px 32px rgba(124, 58, 237, 0.22), 0 2px 8px rgba(124, 58, 237, 0.12);
+    border-color: rgba(124, 58, 237, 0.55);
+  }
+
+  /* Emerald-glowing card hover */
+  .card-hover-emerald:hover {
+    box-shadow: 0 12px 32px rgba(16, 163, 74, 0.22), 0 2px 8px rgba(16, 163, 74, 0.12);
+    border-color: rgba(16, 163, 74, 0.55);
   }
 
   /* Button press animation */

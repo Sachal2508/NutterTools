@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ShieldCheck, Cpu, HardDrive, Lock, ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { toolsRegistry } from '../data/toolsRegistry';
 
 export const About: React.FC = () => {
   useEffect(() => {
@@ -112,7 +113,7 @@ export const About: React.FC = () => {
             font-mono text-xs uppercase tracking-wider font-semibold hover:bg-accent-hover transition-colors shadow-sm
             hover:shadow-[0_4px_16px_rgba(255,92,0,0.35)] btn-press"
         >
-          Explore All 24 Tools
+          Explore All {toolsRegistry.length} Tools
           <ExternalLink size={13} />
         </Link>
       </div>

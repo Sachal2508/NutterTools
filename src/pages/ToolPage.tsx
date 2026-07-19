@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { toolsRegistry } from '../data/toolsRegistry';
 import ToolPageLayout from '../components/shared/ToolPageLayout';
@@ -208,6 +208,18 @@ export const ToolPage: React.FC = () => {
   // Find tool registry metadata matching the current route
   const currentPath = window.location.pathname;
   const tool = toolsRegistry.find(t => t.id === toolId || t.route === currentPath);
+
+  // Track usage for "Most Used" section
+  useEffect(() => {
+    if (!tool) return;
+    try {
+      const stored = localStorage.getItem('nt-tool-usage-counts');
+      const counts: Record<string, number> = stored ? JSON.parse(stored) : {};
+      counts[tool.id] = (counts[tool.id] || 0) + 1;
+      localStorage.setItem('nt-tool-usage-counts', JSON.stringify(counts));
+      window.dispatchEvent(new Event('nt-stats-update'));
+    } catch (_) {}
+  }, [tool?.id]);
 
   if (!tool) {
     return <NotFound />;

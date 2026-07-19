@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
               </span>
             </Link>
             <p className="text-xs text-ink-muted leading-relaxed font-sans max-w-[220px]">
-              24 powerful file utility tools running 100% locally in your browser. Your files never touch a server.
+              {toolsRegistry.length} powerful file utility tools running 100% locally in your browser. Your files never touch a server.
             </p>
             <div className="flex items-center gap-1.5 text-[10px] font-mono text-ink-muted uppercase tracking-wider">
               <Zap size={10} className="text-accent" />
@@ -118,7 +118,15 @@ export const Footer: React.FC = () => {
                     to="/about"
                     className="text-xs text-ink-muted hover:text-accent transition-colors"
                   >
-                    Privacy & Security
+                    Privacy &amp; Security
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/contact"
+                    className="text-xs text-ink-muted hover:text-accent transition-colors"
+                  >
+                    Contact
                   </Link>
                 </li>
               </ul>
